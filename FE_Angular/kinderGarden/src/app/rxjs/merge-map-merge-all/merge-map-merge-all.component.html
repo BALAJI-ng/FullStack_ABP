@@ -1,0 +1,129 @@
+<div class="operator-comparison">
+    <h2>🤔 Why Do They Look The Same? Here's The Difference!</h2>
+
+    <!-- Basic Results - They Look Identical -->
+    <div class="basic-results">
+        <h3>📊 Basic HTTP Results (Look identical, right?)</h3>
+        <div class="results-grid">
+            <div class="result-card">
+                <h4>mergeMap Results:</h4>
+                <pre>{{ mergeMap | json }}</pre>
+            </div>
+            <div class="result-card">
+                <h4>mergeAll Results:</h4>
+                <pre>{{ mergeAll | json }}</pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- The Real Differences -->
+    <div class="differences-section">
+        <h3>🎯 The REAL Differences</h3>
+
+        <!-- Timing Comparison -->
+        <div class="comparison-category">
+            <h4>⏱️ Timing Behavior</h4>
+            <div class="comparison-grid">
+                <div class="operator-card batch">
+                    <h5>📦 Batch Operators (Wait for ALL)</h5>
+                    <div class="operator-result">
+                        <strong>forkJoin:</strong>
+                        <pre>{{ comparisonResults.timing.forkJoin | json }}</pre>
+                    </div>
+                    <div class="operator-result">
+                        <strong>combineLatestAll:</strong>
+                        <pre>{{ comparisonResults.timing.combineLatestAll | json }}</pre>
+                    </div>
+                </div>
+
+                <div class="operator-card streaming">
+                    <h5>🌊 Streaming Operators (Emit as Available)</h5>
+                    <div class="operator-result">
+                        <strong>mergeMap:</strong>
+                        <pre>{{ comparisonResults.timing.mergeMap | json }}</pre>
+                    </div>
+                    <div class="operator-result">
+                        <strong>mergeAll:</strong>
+                        <pre>{{ comparisonResults.timing.mergeAll | json }}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Streaming Comparison -->
+        <div class="comparison-category">
+            <h4>🌊 Streaming Data Handling</h4>
+            <div class="comparison-grid">
+                <div class="operator-result">
+                    <strong>mergeMap (✅ Handles streams):</strong>
+                    <pre>{{ comparisonResults.streaming.mergeMap | json }}</pre>
+                </div>
+                <div class="operator-result">
+                    <strong>mergeAll (✅ Handles streams):</strong>
+                    <pre>{{ comparisonResults.streaming.mergeAll | json }}</pre>
+                </div>
+                <div class="operator-result">
+                    <strong>forkJoin (❌ Can't handle infinite streams):</strong>
+                    <pre>{{ comparisonResults.streaming.forkJoin | json }}</pre>
+                </div>
+                <div class="operator-result">
+                    <strong>combineLatestAll (✅ Limited stream support):</strong>
+                    <pre>{{ comparisonResults.streaming.combineLatestAll | json }}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error Handling -->
+        <div class="comparison-category">
+            <h4>🚨 Error Handling</h4>
+            <div class="comparison-grid">
+                <div class="operator-result">
+                    <strong>forkJoin (❌ One error kills all):</strong>
+                    <pre>{{ comparisonResults.errors.forkJoin | json }}</pre>
+                </div>
+                <div class="operator-result">
+                    <strong>mergeMap (❌ Error stops stream):</strong>
+                    <pre>{{ comparisonResults.errors.mergeMap | json }}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="summary-section">
+        <h3>📋 When to Use Each</h3>
+        <div class="use-cases-grid">
+            <div class="use-case-card forkjoin">
+                <h4>forkJoin</h4>
+                <p>✅ Fixed parallel HTTP requests</p>
+                <p>✅ Need ALL results together</p>
+                <p>❌ Can't handle infinite streams</p>
+                <p>❌ One error kills everything</p>
+            </div>
+
+            <div class="use-case-card combinelatesall">
+                <h4>combineLatestAll</h4>
+                <p>✅ Dynamic number of observables</p>
+                <p>✅ Need latest from ALL sources</p>
+                <p>❌ Complex for simple HTTP calls</p>
+                <p>✅ Good for reactive forms</p>
+            </div>
+
+            <div class="use-case-card mergemap">
+                <h4>mergeMap</h4>
+                <p>✅ Transform and flatten</p>
+                <p>✅ Handle streaming data</p>
+                <p>✅ Results as available</p>
+                <p>❌ No order guarantee</p>
+            </div>
+
+            <div class="use-case-card mergeall">
+                <h4>mergeAll</h4>
+                <p>✅ Flatten observable of observables</p>
+                <p>✅ Handle streaming data</p>
+                <p>✅ More explicit than mergeMap</p>
+                <p>❌ Requires map() first</p>
+            </div>
+        </div>
+    </div>
+</div>

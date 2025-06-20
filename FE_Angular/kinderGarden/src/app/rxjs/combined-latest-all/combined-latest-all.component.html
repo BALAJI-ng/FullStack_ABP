@@ -1,0 +1,127 @@
+<div class="combined-latest-demo">
+    <h2>🔄 CombineLatestAll Operator Demo</h2>
+    <p class="description">
+        Fetching users with IDs [1, 2, 3] and combining all HTTP responses into a single array.
+    </p> <!-- Test Button -->
+    <div class="test-section">
+        <button class="test-button" (click)="loadUsers()" [disabled]="isLoading">
+            {{ isLoading ? '⏳ Loading...' : '🔄 Load Users & See Real-World Examples' }}
+        </button>
+        <p class="test-info">Click to see operator differences + real-world combineLatestAll examples</p>
+    </div>
+
+    <!-- Real-World Examples Section -->
+    <div class="real-world-section"
+        *ngIf="realWorldExamples.dynamicFormFields || realWorldExamples.searchResults || realWorldExamples.stockPrices || realWorldExamples.userPermissions">
+        <h3>🌟 Real-World combineLatestAll Examples</h3>
+
+        <div class="examples-grid">
+            <!-- Dynamic Form Fields -->
+            <div class="example-card" *ngIf="realWorldExamples.dynamicFormFields">
+                <h4>📝 Dynamic Form Fields</h4>
+                <p class="use-case">When you have a form with dynamic number of search inputs</p>
+                <pre>{{ realWorldExamples.dynamicFormFields | json }}</pre>
+            </div>
+
+            <!-- Multi-API Search -->
+            <div class="example-card" *ngIf="realWorldExamples.searchResults">
+                <h4>🔍 Multi-API Search</h4>
+                <p class="use-case">Search across multiple APIs simultaneously</p>
+                <pre>{{ realWorldExamples.searchResults | json }}</pre>
+            </div>
+
+            <!-- Stock Price Monitoring -->
+            <div class="example-card" *ngIf="realWorldExamples.stockPrices">
+                <h4>📈 Stock Price Monitoring</h4>
+                <p class="use-case">Monitor real-time prices for dynamic watchlist</p>
+                <pre>{{ realWorldExamples.stockPrices | json }}</pre>
+            </div>
+
+            <!-- User Permissions -->
+            <div class="example-card" *ngIf="realWorldExamples.userPermissions">
+                <h4>🔐 Dynamic User Permissions</h4>
+                <p class="use-case">Check permissions for dynamically loaded modules</p>
+                <pre>{{ realWorldExamples.userPermissions | json }}</pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Operator Comparison Section -->
+    <div class="comparison-section" *ngIf="combineLatestAllResult || forkJoinResult || combineLatestResult">
+        <h3>🔍 Operator Comparison Results</h3>
+
+        <div class="comparison-grid">
+            <div class="comparison-card error">
+                <h4>❌ combineLatestAll() Result:</h4>
+                <pre>{{ combineLatestAllResult | json }}</pre>
+                <p class="explanation">Notice: Returns Observable objects with 'source' properties instead of data!</p>
+            </div>
+
+            <div class="comparison-card success">
+                <h4>✅ forkJoin() Result:</h4>
+                <pre>{{ forkJoinResult | json }}</pre>
+                <p class="explanation">Perfect: Returns actual user data arrays!</p>
+            </div>
+
+            <div class="comparison-card success">
+                <h4>✅ combineLatest() Result:</h4>
+                <pre>{{ combineLatestResult | json }}</pre>
+                <p class="explanation">Also works: Returns actual user data arrays!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Method 1: Using subscription -->
+    <div class="users-section">
+        <h3>📋 Method 1: Subscription Approach</h3>
+        <div class="users-grid" *ngIf="users.length > 0; else loadingTemplate">
+            <div *ngFor="let user of users; let i = index" class="user-card">
+                <div class="user-header">
+                    <h4>{{ user.name }}</h4>
+                    <span class="user-id">ID: {{ user.id }}</span>
+                </div>
+                <div class="user-details">
+                    <p><strong>Username:</strong> {{ user.username }}</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    <p><strong>Phone:</strong> {{ user.phone }}</p>
+                    <p><strong>Website:</strong> {{ user.website }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Method 2: Using async pipe (recommended) -->
+    <div class="users-section">
+        <h3>🔥 Method 2: Async Pipe (Recommended)</h3>
+        <div class="users-grid" *ngIf="users$ | async as asyncUsers; else loadingTemplate">
+            <div *ngFor="let user of asyncUsers; let i = index" class="user-card">
+                <div class="user-header">
+                    <h4>{{ user.name }}</h4>
+                    <span class="user-id">ID: {{ user.id }}</span>
+                </div>
+                <div class="user-details">
+                    <p><strong>Username:</strong> {{ user.username }}</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    <p><strong>Phone:</strong> {{ user.phone }}</p>
+                    <p><strong>Website:</strong> {{ user.website }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Debug Section -->
+    <div class="debug-section">
+        <h3>🔍 Debug Information</h3>
+        <details>
+            <summary>Raw JSON Data (Click to expand)</summary>
+            <pre>{{ users | json }}</pre>
+        </details>
+    </div>
+
+    <!-- Loading Template -->
+    <ng-template #loadingTemplate>
+        <div class="loading">
+            <p>🔄 Loading users...</p>
+        </div>
+    </ng-template>
+</div>

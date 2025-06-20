@@ -1,0 +1,16 @@
+<form class="example-form">
+    <mat-form-field class="example-full-width">
+        <mat-label>Favorite food</mat-label>
+        <input [formControl]="searchControl" matInput placeholder="Search for Bret" value="">
+    </mat-form-field>
+    <mat-divider />
+    <section>
+
+        <div class="example-button-row">
+
+            <button matButton="elevated" (click)="getBretAgainNotAPICall()">Get Bret</button>
+            {{this.products | json}}
+        </div>
+    </section>
+    <mat-divider />
+</form>

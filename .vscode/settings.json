@@ -1,0 +1,10 @@
+{
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.project.sourcePaths": [
+        "BE_SpringBoot/src/main/java"
+    ],
+    "java.project.outputPath": "BE_SpringBoot/target",
+    "java.project.referencedLibraries": [
+        "BE_SpringBoot/target/dependency/*.jar"
+    ]
+}

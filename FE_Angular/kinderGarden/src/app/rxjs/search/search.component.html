@@ -1,0 +1,93 @@
+<h5> using switchMap to cancel previous HTTP requests when a user types into a search box—perfect for live search
+    scenarios in Angular with RxJS:
+</h5>
+
+<form class="example-form">
+    <mat-form-field class="example-full-width">
+        <mat-label>Favorite food</mat-label>
+        <input [formControl]="searchControl" matInput placeholder="Ex. Pizza" value="Sushi">
+    </mat-form-field>
+</form>
+
+<!-- Display Retrieved Data Section -->
+<div class="search-results-container" *ngIf="searchResults$ | async as results">
+    <h3>Search Results</h3>
+    <div class="results-count">
+        Found {{ results.length }} result(s)
+    </div>
+
+    <div class="results-list" *ngIf="results.length > 0">
+        <div *ngFor="let user of results; let i = index" class="result-item">
+            <div class="user-card">
+                <div class="user-header">
+                    <h4 class="user-name">{{ user.name }}</h4>
+                    <span class="user-id">ID: {{ user.id }}</span>
+                </div>
+
+                <div class="user-details">
+                    <div class="detail-row">
+                        <strong>Username:</strong> {{ user.username }}
+                    </div>
+                    <div class="detail-row">
+                        <strong>Email:</strong> {{ user.email }}
+                    </div>
+                    <div class="detail-row" *ngIf="user.phone">
+                        <strong>Phone:</strong> {{ user.phone }}
+                    </div>
+                    <div class="detail-row" *ngIf="user.website">
+                        <strong>Website:</strong>
+                        <a [href]="'http://' + user.website" target="_blank">{{ user.website }}</a>
+                    </div>
+                </div>
+
+                <div class="user-address" *ngIf="user.address">
+                    <h5>Address:</h5>
+                    <div class="address-details">
+                        <div>{{ user.address.street }} {{ user.address.suite }}</div>
+                        <div>{{ user.address.city }}, {{ user.address.zipcode }}</div>
+                    </div>
+                </div>
+
+                <div class="user-company" *ngIf="user.company">
+                    <h5>Company:</h5>
+                    <div class="company-details">
+                        <div><strong>{{ user.company.name }}</strong></div>
+                        <div class="company-catchphrase">{{ user.company.catchPhrase }}</div>
+                        <div class="company-business">{{ user.company.bs }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="no-results" *ngIf="results.length === 0">
+        <p>No users found matching your search criteria.</p>
+    </div>
+</div>
+
+<!-- Loading Indicator -->
+<div class="loading-container" *ngIf="isLoading$ | async">
+    <div class="loading-spinner">🔄</div>
+    <span>Searching...</span>
+</div>
+
+<!-- Error Display -->
+<div class="error-container" *ngIf="error$ | async as error">
+    <div class="error-message">
+        <h4>⚠️ Error occurred:</h4>
+        <p>{{ error }}</p>
+    </div>
+</div>
+
+<!-- Search Info -->
+<div class="search-info">
+    <div class="info-card">
+        <h4>🔍 How it works:</h4>
+        <ul>
+            <li>Type in the search box above</li>
+            <li>The app uses <code>switchMap</code> to cancel previous requests</li>
+            <li>Only the latest search request will complete</li>
+            <li>Results are fetched from JSONPlaceholder API</li>
+        </ul>
+    </div>
+</div>
